@@ -31,9 +31,11 @@ function onDeviceReady() {
    ("click", cameraTakePicture); 
 }
 var countImg = 0;
+var sourceIMG;
 function cameraTakePicture() { 
     navigator.camera.getPicture(onSuccess, onFail, {  
        quality: 50, 
+       saveToPhotoAlbum: true, //con esto hago el guardado de la imagen en el album de fotos
        destinationType: Camera.DestinationType.DATA_URL 
     });  
     
@@ -44,8 +46,9 @@ function cameraTakePicture() {
        image.id= 'myImage'+countImg;
        image.className='contenedorImgClass';
        image.src = "data:image/jpeg;base64," + imageData; 
-       
+       sourceIMG = image.src;
        document.getElementById('contenedorImg').appendChild(image);
+       createFile();
        countImg++;
     }  
     
@@ -53,3 +56,5 @@ function cameraTakePicture() {
        alert('Failed because: ' + message); 
     } 
  }
+
+ 
